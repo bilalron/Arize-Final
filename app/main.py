@@ -15,7 +15,7 @@ import os
 # Load environment variables
 load_dotenv()
 
-app = FastAPI(title="Document QA API")
+app = FastAPI(title="Document QA API 1")
 
 # Add CORS middleware
 app.add_middleware(
