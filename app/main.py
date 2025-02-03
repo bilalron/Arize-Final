@@ -166,7 +166,7 @@ async def query_documents(request: QueryRequest):
             [match.metadata['text'] for match in results.matches]
         )
 
-        prompt = """
+        prompt = f"""
         Please provide a clear explanation using this context:
         {context_text}
 
