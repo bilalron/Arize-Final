@@ -21,9 +21,9 @@ app = FastAPI(title="Document QA API 1")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Allow all origins
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type", "Accept"],
-    allow_credentials=False  # Set this to False when using "*"
+    allow_methods=["*"],
+    allow_headers=["*"],
+    allow_credentials=True  # Set this to False when using "*"
 )
 
 # Initialize clients
