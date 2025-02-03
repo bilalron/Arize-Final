@@ -165,18 +165,84 @@ async def query_documents(request: QueryRequest):
         context_text = "\n\n---\n\n".join(
             [match.metadata['text'] for match in results.matches]
         )
-        
-        # Generate response
-        prompt = f"""
-        Answer the question based only on the following context:
 
+        prompt = """
+        Please provide a clear explanation using this context:
         {context_text}
 
-        ---
+        Question to address:
+        {request.question}
 
-        Question: {request.question}
-        Answer:
+        Format your response following these guidelines:
+
+        MATHEMATICAL NOTATION:
+        1. Inline Mathematics
+        - Use single $...$ for inline expressions
+        - Example: $x^2 + y^2 = z^2$
+        - Keep simple expressions inline
+
+        2. Display Mathematics
+        - Use $$...$$ for standalone equations
+        - Center important equations on their own line
+        - Example:
+        $$
+        E = mc^2
+        $$
+
+        3. Multi-line Equations
+        - Use align* environment within $$
+        - Example:
+        $$
+        \\begin opencurly brace align* closecurly brace
+        y &= mx + b \\\\
+        &= 2x + 3
+        \\end opencurly brace align* closecurly brace
+        $$
+
+        4. Matrices and Arrays
+        - Wrap in $$
+        - Use appropriate environment (matrix, pmatrix, bmatrix)
+        - Example:
+        $$
+        \\begin opencurly brace pmatrix closecurly brace
+        a & b \\\\
+        c & d
+        \\end opencurly brace pmatrix closecurly brace
+        $$
+
+        WRITING STYLE:
+        1. Structure
+        - Start with a brief overview
+        - Break complex ideas into steps
+        - Use clear transitions between concepts
+        - No need to use astricks for to bold text. Bold text is not needed.
+        - Avoid using bullet point style explanation. Just make sure everything is organized. 
+
+        2. Clarity
+        - Define variables on first use
+        - Explain key steps clearly
+        - Use examples for complex concepts
+
+        3. Formatting
+        - Break long explanations into paragraphs
+        - Do not use any astricks for fomatting
+        - Avoid bullet points or things similar to bullet points
+
+        4. Mathematical Writing
+        - Introduce equations before using them
+        - Explain the meaning of symbols
+        - Connect formulas to concepts
+
+        Remember:
+        - Use LaTeX only when it adds value
+        - Keep explanations conversational but precise
+        - Prioritize understanding over formality
+        - Balance thoroughness with conciseness
+
+        Your response should feel like a knowledgeable friend explaining the concept clearly and naturally.
         """
+        
+ 
         
         response_text = get_llm_response(prompt)
         
